@@ -31,7 +31,7 @@ public class TyperManGame extends JPanel implements KeyListener, ActionListener 
 		setSize(400,400);
 		setLayout(null);
 		bank = Dictionary.getWords("words.txt");
-		setBackground(Color.WHITE);
+		setBackground(Color.BLACK);
 		currentString = new JTextField("");
 		//Initializes field to type the words
 		currentString.addActionListener(new ActionListener () {
@@ -49,12 +49,12 @@ public class TyperManGame extends JPanel implements KeyListener, ActionListener 
 		currentString.setForeground(Color.white);
 		currentString.setFont(currentString.getFont().deriveFont(20f)); 
 		
-		pointBox = new JTextArea("");
+		pointBox = new JTextArea("0");
 		pointBox.setEditable(false);
 		pointBox.setSize(60,30);
 		pointBox.setBackground(Color.RED);
 		pointBox.setForeground(Color.white);
-		pointBox.setLocation(150, 10);
+		pointBox.setLocation(340,342);
 		
 		add(pointBox);
 		add(currentString);
