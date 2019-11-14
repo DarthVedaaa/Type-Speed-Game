@@ -19,8 +19,8 @@ public class EndGame extends JFrame {
     		throw new RuntimeException(e);
 	}
       	setLayout(new FlowLayout());
-	JLabel scorelabel = new JLabel("Your Final Score : ");
-	JTextField score = new JTextField(String.valueOf(n));
+	JLabel scorelabel = new JLabel("<html><font color='white'>Your Final Score : " + String.valueOf(n)+ "<br></html>");
+	add(scorelabel,"span, grow");
 	btn1 = new Button("New Game");
 	btn1.addActionListener(new ActionListener() {
 		public void actionPerformed(ActionEvent e) {   	

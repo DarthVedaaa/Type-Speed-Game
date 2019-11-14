@@ -6,6 +6,7 @@ import java.awt.event.KeyListener;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Date;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -24,8 +25,10 @@ public class TyperManGame extends JPanel implements KeyListener, ActionListener 
 	ArrayList<FallingWord> wordsOnBoard;
 	private int points;
 	private Timer time;
-	private int currentTime;
-	private int difficulty;
+	private long initialTime;
+	private long currentTime;
+	private double difficulty = 1;
+	private double change = 0.2;
 	
 	public TyperManGame() throws FileNotFoundException {
 		setSize(400,400);
@@ -65,9 +68,10 @@ public class TyperManGame extends JPanel implements KeyListener, ActionListener 
 	
 	public void startNewGame() {
 		points = 0;
-		currentTime = 0;
+		java.util.Date date = new java.util.Date();
+		initialTime = date.getTime();
 		wordsOnBoard = new ArrayList<FallingWord>();
-		difficulty = 0;
+		difficulty = 1;
 		time.start();
 	}
 	
@@ -77,7 +81,7 @@ public class TyperManGame extends JPanel implements KeyListener, ActionListener 
 		currentString.setText("");
 		//Clears the field for user to type the next word
 		if(wordIsOnBoard(entry)) {
-			points = points + entry.length() + difficulty;
+			points = points + entry.length() + (int)difficulty;
 			//Points are increased based on length of the word and the difficulty.
 			pointBox.setText(""+points);
 			//Update the points
@@ -120,7 +124,6 @@ public class TyperManGame extends JPanel implements KeyListener, ActionListener 
 
 	@Override
 	public void actionPerformed(ActionEvent arg0) {
-		currentTime++;
 		moveAllDown();
 		if(collison()) {
 			endGame();
@@ -129,12 +132,13 @@ public class TyperManGame extends JPanel implements KeyListener, ActionListener 
 	}
 	
 	private void adjustDifficulty() {
-		int wordFrequency = 40 - (difficulty*2)/5+1;
-		if(wordFrequency < 4) {
-			wordFrequency = 4;
-		}
-		if(currentTime % wordFrequency == 0) {
-			difficulty++;
+		Date date = new Date();
+		currentTime = date.getTime();
+
+		if (currentTime - initialTime >=6000)
+		{
+			difficulty+= change;
+			initialTime = currentTime;
 			makeNewWord();
 		}
 	}
@@ -237,7 +241,7 @@ public class TyperManGame extends JPanel implements KeyListener, ActionListener 
 		}
 		
 		public void updateBox() {
-			yLoc = yLoc + boxVel;
+			yLoc = (int)(yLoc + boxVel*difficulty);
 			box.setLocation(xLoc, yLoc);
 			if(yLoc>235) {
 				box.setForeground(Color.white);
