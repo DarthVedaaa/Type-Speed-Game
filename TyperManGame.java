@@ -147,6 +147,9 @@ public class TyperManGame extends JPanel implements KeyListener, ActionListener 
 
 	private void endGame() {
 		time.stop();
+		EndGame Avengers = new EndGame(points);
+		this.setVisible(false);
+		Avengers.setVisible(true);
 	}
 
 	public boolean collison() {
