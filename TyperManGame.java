@@ -28,7 +28,7 @@ public class TyperManGame extends JPanel implements KeyListener, ActionListener 
 	private long initialTime;
 	private long currentTime;
 	private double difficulty = 1;
-	private double change = 0.2;
+	private double change = 0.02;
 	
 	public TyperManGame() throws FileNotFoundException {
 		setSize(400,400);
@@ -134,8 +134,7 @@ public class TyperManGame extends JPanel implements KeyListener, ActionListener 
 	private void adjustDifficulty() {
 		Date date = new Date();
 		currentTime = date.getTime();
-
-		if (currentTime - initialTime >=6000)
+		if (currentTime - initialTime >=2000)
 		{
 			difficulty+= change;
 			initialTime = currentTime;
